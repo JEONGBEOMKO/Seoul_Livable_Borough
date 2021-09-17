@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <h1>{{title}} 검색결과</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Home </a>
+                </li>
+                <li>
+                    <a href="/map">map </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% for data in datas %}
+        <div>
+            <h2>주소: {{data[1] + data[2]+data[5]}}</h2>
+            <div>계약년월: {{data[7]}}</div>
+            <div>거래금액: {{data[9]}}만원</div>
+            <div>건축년도: {{data[11]}}</div>
+        </div>
+        <hr>
+        {% endfor %}
+    </main>
+</body>
+
+</html>

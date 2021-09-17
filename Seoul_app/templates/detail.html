@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <title>ApartmentNow | Detail</title>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <style>
+        .canvas-layer {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        header {
+            padding: 0;
+        }
+
+        nav {
+            margin-bottom: 30px;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detail.css') }}">
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js'></script>
+
+
+</head>
+
+<body>
+
+    <div>
+        <header>
+            <h1>{{ title }} 검색결과</h1>
+            <div id="btns">
+                <div class="btn">
+                    <div class="btn-layer" onclick="location.href='/';">
+                        <span>HOME</span>
+                    </div>
+                </div>
+                <div class="btn">
+                    <div class="btn-layer" onclick="location.href='/map';">MAP</div>
+                </div>
+                <div class="btn">
+                    <div class="btn-layer">SOON</div>
+                </div>
+            </div>
+        </header>
+        <hr>
+        <div class='canvas-layer'>
+            <h3 id="total">{{result_point}}</h3>
+            <h3 id="total-slash">/</h3>
+            <h3 id="total-under">10점</h3>
+            <canvas id='mainchart' width='500' height='400' aria-label='Hello ARIA World'></canvas>
+        </div>
+        <hr>
+        <div class='canvas-layer'>
+            <canvas id='myChart' width='500' height='400' aria-label='Hello ARIA World'></canvas>
+            <canvas id='myChart2' width='500' height='400' aria-label='Hello ARIA World'></canvas>
+        </div>
+        <hr>
+        <div class='canvas-layer'>
+            <canvas id='myChart3' width='500' height='400' aria-label='Hello ARIA World'></canvas>
+            <canvas id='myChart4' width='500' height='400' aria-label='Hello ARIA World'></canvas>
+        </div>
+        <hr>
+        <div class='canvas-layer'>
+            <canvas id='myChart5' width='500' height='400'></canvas>
+            <canvas id='myChart6' width='500' height='400'></canvas>
+
+        </div>
+        <hr>
+        <footer class="copyright">
+            <p>Copyright © 2021 bt4.Crew All rights reserved.</p>
+        </footer>
+
+    </div>
+    <script>
+        var ctx = document.getElementById('mainchart');
+        var myChart = new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+                labels: ["교육/보건","편의시설","범죄율","평단가"],
+        datasets: [{
+            label: '종합점수',
+            data: {{ total_datas }},
+            backgroundColor:[
+            'rgb(58, 216, 119,0.3)',
+                'rgb(58, 208, 216,0.3)',
+                'rgb(201, 30, 112,0.3)',
+                'rgb(201, 164, 30,0.3)'
+            ],
+            borderColor:[
+                'rgb(58, 216, 119)',
+                'rgb(58, 208, 216)',
+                'rgb(201, 30, 112)',
+                'rgb(201, 164, 30)'
+            ],
+            borderWidth:1,
+                }]
+            },
+        options: {
+            title: {
+                display: true,
+                    text: "총합점수"
+            },
+            responsive: false,
+        }
+    });
+    </script>
+
+    <script>
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [{% for label in labels %}'{{ label.replace('_','년 ') }}분기',
+                {% endfor %}],
+        datasets: [{
+            label: '면적당가격',
+            data: {{ data }},
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+            borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+            borderWidth: 1,
+            lineTension: 0.3,
+            fill: false,
+            pointBorderColor: 'rgb(0, 169, 255)',
+            pointBackgroundColor: 'rgb(0, 221, 255)',
+            pointRadius: 5,
+            pointHoverRadius: 10,
+            pointBorderWidth: 5,
+                }]
+            },
+        options: {
+            title: {
+                display: true,
+                    text: "면적당가격(m²)"
+            },
+            responsive: false,
+                scales: {
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        show: true,
+                        labelString: 'Value'
+                    },
+                    ticks: {
+                        suggestedMin: 10, //suggestedMax: 250,     
+
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+    <script>
+        var ctx = document.getElementById('myChart2');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for label in labels %}'{{ label.replace('_','년 ') }}분기',
+                {% endfor %}],
+        datasets: [{
+            label: '면적당가격',
+            data: {{ data }},
+            backgroundColor: [
+            '#FF692D',
+            '#D6E4FF',
+            '#84A9FF',
+            '#3366FF',
+            '#1939B7',
+            '#C2F379',
+            '#7ED824',
+            '#499B12',
+            '#236706',
+            '#42DCFF',
+            '#2185B7'
+
+
+        ],
+            borderColor: [
+            '#FF692D',
+            '#D6E4FF',
+            '#84A9FF',
+            '#3366FF',
+            '#1939B7',
+            '#C2F379',
+            '#7ED824',
+            '#499B12',
+            '#236706',
+            '#42DCFF',
+            '#2185B7'
+        ], borderWidth: 2,
+            lineTension: 0.3,
+            fill: false,
+            pointBorderColor: 'rgb(0, 169, 255)',
+            pointBackgroundColor: 'rgb(0, 221, 255)',
+            pointRadius: 5,
+            pointHoverRadius: 10,
+            pointBorderWidth: 5,
+            
+            
+                }]
+            },
+        options: {
+            title: {
+                display: true,
+                    text: "면적당가격(m²)"
+            },
+            responsive: false,
+                
+        }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('myChart3');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [{% for label in pop_datas["기간"] %}"{{ label.replace("_","년 ") }}분기",
+                {% endfor %}],
+        datasets: [{
+            label: '분기별인구',
+            yAxesID: "A",
+            data: {{
+            pop_datas["인구"].values.tolist()
+        }},
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+            borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ], borderWidth: 5,
+            lineTension: 0.3,
+            fill: false,
+            pointBorderColor: 'rgb(0, 169, 255)',
+            pointBackgroundColor: 'rgb(0, 221, 255)',
+            pointRadius: 5,
+            pointHoverRadius: 10,
+            pointBorderWidth: 5,
+            
+            
+                }]
+            },
+        options: {
+            title: {
+                display: true,
+                    text: "분기별 인구이동"
+            },
+            responsive: false,
+                scales: {
+                yAxes: [
+                    {
+                        id: "A",
+                        type: "linear",
+                        position: "left",
+                        ticks: {
+                            min: {{ pop_datas["인구"].values.min() - (pop_datas["인구"].values.min() * 0.05) | round(0) }},
+            max: {{ pop_datas["인구"].values.max() + (pop_datas["인구"].values.max() * 0.05)| round(0) }},
+
+            callback: function (value, index, values) {
+                return value + "명"
+            },
+        },
+                    }]
+            }
+        }
+    });
+    </script>
+    <script>
+        var ctx = document.getElementById('myChart4');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [{% for label in park_datas["기간"] %}"{{ label}} 분기",
+                {% endfor %}],
+        datasets: [{
+            label: '1인당면적',
+            data: {{
+            park_datas["1인당면적"].values.tolist()
+        }},
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+            borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ], borderWidth: 5,
+            lineTension: 0.3,
+            fill: false,
+            pointBorderColor: 'rgb(0, 169, 255)',
+            pointBackgroundColor: 'rgb(0, 221, 255)',
+            pointRadius: 5,
+            pointHoverRadius: 10,
+            pointBorderWidth: 5,
+            
+            
+                }]
+            },
+        options: {
+            title: {
+                display: true,
+                    text: "인구당공원면적비"
+            },
+            responsive: false,
+                scales: {
+                yAxes:[{
+                    ticks: {
+                            min: {{ park_datas["1인당면적"].values.min() - (park_datas["1인당면적"].values.min() * 0.1) | round(0) }},
+            max: {{ park_datas["1인당면적"].values.max() + (park_datas["1인당면적"].values.max() * 0.1)| round(1) }},
+
+            callback: function (value, index, values) {
+                return value + "m²"
+            },
+        },
+                }]
+            }
+
+        }
+    });
+    </script>
+    <script>
+        var ctx = document.getElementById('myChart5');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for label in crime_datas["기간"] %}"{{ label}} 분기",
+                {% endfor %}],
+        datasets: [{
+            label: "살인",
+            data: {{ crime_datas["살인(발생)"].tolist() }},
+            yAxesID: "A",
+            backgroundColor: "rgb(230, 1, 0,0.2)",
+            borderColor: "rgb(230, 1, 0,0.7)",
+            type: 'line'
+            
+
+        }, {
+            label: "강도",
+            yAxesID: "A",
+            data: {{ crime_datas["강도(발생)"].tolist() }},
+            backgroundColor: "rgb(0, 128, 1,0.2)",
+            borderColor: "rgb(0, 128, 1,0.7)",
+            type: 'line'
+            
+
+        }, {
+
+            label: "추행",
+            yAxesID: "B",
+            data: {{ crime_datas["추행(발생)"].tolist() }},
+            backgroundColor: "rgb(196, 214, 81,0.2)",
+            borderColor: "rgb(196, 214, 81,0.7)",
+            borderWidth:5,
+
+        }, {
+            label: "절도",
+            yAxesID: "B",
+            data: {{ crime_datas["절도(발생)"].tolist() }},
+            backgroundColor: "rgb(54, 80, 226,0.2)",
+            borderColor: "rgb(54, 80, 226,0.7)",
+            borderWidth:5,
+
+        }, {
+            label: "폭력",
+            yAxesID: "B",
+            data: {{ crime_datas["폭력(발생)"].tolist() }},
+            backgroundColor: "rgb(255, 192, 204,0.2)",
+            borderColor: "rgb(255, 192, 204,0.7)",
+            borderWidth:5,
+
+        }
+        ]
+            },
+        options: {
+            title: {
+                display: true,
+                    text: "범죄발생비율"
+            },
+            responsive: false,
+
+                plugins: {
+                title: {
+                    display: true,
+                        text: "종류별범죄율"
+                },
+                tooltip: {
+                    position: "nearest"
+                }
+            },
+            scales: {
+                yAxes: [{
+                    id: "A",
+                    type: "linear",
+                    position: "left",
+
+
+                }, {
+                    id: "B",
+                    type: "linear",
+                    position: "right",
+
+                }
+                ]
+
+            }
+        }
+});
+    </script>
+    <script>
+        var ctx = document.getElementById('myChart6');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for label in edu_datas["기간"] %}"{{ label}} 분기",
+                {% endfor %}],
+        datasets: [{
+            label: "유치원",
+            data: {{ edu_datas["학급당학생수(유아)"].tolist() }},
+            yAxesID: "A",
+            backgroundColor: "rgb(230, 1, 0,0.2)",
+            borderColor: "rgb(230, 1, 0,0.7)",
+            borderWidth:5,
+            
+
+        }, {
+            label: "초등학교",
+            yAxesID: "A",
+            data: {{ edu_datas["학급당학생수(초등)"].tolist() }},
+            backgroundColor: "rgb(0, 128, 1,0.2)",
+            borderColor: "rgb(0, 128, 1,0.7)",
+            borderWidth:5,
+            
+
+        }, {
+
+            label: "중학교",
+            yAxesID: "B",
+            data: {{ edu_datas["학급당학생수(중등)"].tolist() }},
+            backgroundColor: "rgb(196, 214, 81,0.2)",
+            borderColor: "rgb(196, 214, 81,0.7)",
+            borderWidth:5,
+
+        }, {
+            label: "고등학교",
+            yAxesID: "B",
+            data: {{ edu_datas["학급당학생수(고등)"].tolist() }},
+            backgroundColor: "rgb(54, 80, 226,0.2)",
+            borderColor: "rgb(54, 80, 226,0.7)",
+            borderWidth:5
+
+        }
+        ]
+            },
+        options: {
+            title: {
+                display: true,
+                    text: "학급당원아수"
+            },
+            responsive: false,
+                scales: {
+                yAxes: [
+                    {
+                        ticks: {
+
+                            callback: function (value, index, values) {
+                                return value + "명"
+                            },
+                        },
+                    }]
+            }
+        }
+});
+    </script>
+
+</body>
+
+</html>

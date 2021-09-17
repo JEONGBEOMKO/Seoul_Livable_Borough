@@ -1,0 +1,148 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body {
+  box-sizing: border-box;
+  height: 100%;
+  width: auto;
+  display: flex;
+  background: linear-gradient(to bottom, #4d6691,#6889c3);
+}
+
+.copyright {
+  margin-top: 4rem;
+  color: rgba(255, 255, 255, 0.736);
+  display: flex;
+  justify-content: center;
+  opacity: 0.2;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.canvas-layer{
+  position: relative;
+}
+
+#total{
+  position: absolute;
+  left: 253px;
+  top: 55px;
+}
+
+#total-slash{
+  position: absolute;
+  left: 290px;
+  top: 4px;
+  font-size: 60px;
+  transform:rotateZ(4deg);
+}
+
+#total-under{
+  position: absolute;
+  left: 310px;
+  top: 80px;
+  font-weight: 200;
+}
+
+#btns {
+  display: flex;
+  width: 30%;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.btn {
+  width: 5rem;
+  height: 2rem;
+  background-color: #384b6de6;
+  position: relative;
+  border-radius: 10%;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.btn-layer {
+  position: absolute;
+  text-align: center;
+  width: 5rem;
+  border-radius: 10%;
+  height: 2rem;
+  background-color: #456eb5;
+  right: 7px;
+  bottom: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: cadetblue;
+  text-shadow: none;
+}
+canvas{
+  background-color: white;
+  box-shadow: 0 0  10px 1px white;
+}
+.canvas-layer{
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+}
+h3{
+  opacity: 0;
+  animation: RotateFade 1s ease-in-out forwards;
+}
+
+#mainchart{
+  opacity: 0;
+  z-index: -1;
+  animation: RotateFade 1s ease-in-out forwards;
+}
+#myChart{
+  opacity: 0;
+  animation: RotateFade 1s ease-in-out forwards;
+  animation-delay: 0.1s;
+}
+#myChart2{
+  opacity: 0;
+  animation: RotateFade 1s ease-in-out forwards;
+  animation-delay: 0.2s;
+}
+#myChart3{
+  opacity: 0;
+  animation: RotateFade 1s ease-in-out forwards;
+  animation-delay: 0.3s;
+}
+#myChart4{
+  opacity: 0;
+  animation: RotateFade 1s ease-in-out forwards;
+  animation-delay: 0.4s;
+}
+#myChart5{
+  opacity: 0;
+  animation: RotateFade 1s ease-in-out forwards;
+  animation-delay: 0.5s;
+}
+#myChart6{
+  opacity: 0;
+  animation: RotateFade 1s ease-in-out forwards;
+  animation-delay: 0.6s;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+@keyframes RotateFade {
+  from{
+    opacity: 0;
+    transform:translateY(-100px)
+  }
+  to{
+    opacity: 1;
+    transform:translateY(0)
+  }
+}
